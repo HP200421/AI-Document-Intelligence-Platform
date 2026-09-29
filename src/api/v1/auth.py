@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, Response, Cookie
 from src.schemas.auth import LoginRequest, TokenResponse
 from src.services.auth_service import login, refresh_access_token, logout
 from sqlalchemy.orm import Session
+from src.core.config import settings
 
 from src.db.database import get_db
 
@@ -17,7 +18,7 @@ def user_login_endpoint(login_data: LoginRequest, response : Response, db: Sessi
     response.set_cookie(
         key="refresh_token",
         value=tokens.refresh_token,
-        secure=True,
+        secure=settings.SECURE_COOKIE,
         httponly=True,
         samesite="lax",
         max_age=604800, #7 Days
@@ -26,7 +27,7 @@ def user_login_endpoint(login_data: LoginRequest, response : Response, db: Sessi
     response.set_cookie(
         key="access_token",
         value=tokens.access_token,
-        secure=True,
+        secure=settings.SECURE_COOKIE,
         httponly=True,
         samesite="lax",
         max_age=900, #15 Minutes
