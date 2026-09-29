@@ -9,6 +9,7 @@ from src.core.config import settings
 from src.db.base import Base
 from src.models.user import User
 from src.models.refresh_token import RefreshToken
+from src.models.document import Document
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
