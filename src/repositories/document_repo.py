@@ -2,15 +2,15 @@ from sqlalchemy.orm import Session
 from sqlalchemy import Select
 
 from src.models.document import Document
-from src.schemas.document import DocumentCreate
 
-def create_document(db: Session, document_data:DocumentCreate) -> Document:
+def create_document(db: Session, user_id:int, file_data:dict) -> Document:
 
     document = Document(
-        filename = document_data.filename,
-        filesize = document_data.filesize,
-        filepath = document_data.filepath,
-        content_type = document_data.content_type
+        user_id = user_id,
+        filename = file_data["filename"],
+        filesize = file_data["filesize"],
+        filepath = file_data["filepath"],
+        content_type = file_data["content_type"]
     )
 
     db.add(document)

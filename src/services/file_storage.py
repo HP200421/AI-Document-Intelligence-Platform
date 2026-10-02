@@ -42,9 +42,7 @@ async def save_document(file: UploadFile) -> dict:
         raise
 
     finally:
-        file.close()
-
-
+        await file.close()
 
     return {
         "filename": file.filename,

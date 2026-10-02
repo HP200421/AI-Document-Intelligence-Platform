@@ -1,5 +1,5 @@
 from pydantic import BaseModel, ConfigDict
-import datetime
+from datetime import datetime
 
 class DocumentResponse(BaseModel):
     id: int
