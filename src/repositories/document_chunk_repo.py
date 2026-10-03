@@ -8,6 +8,6 @@ def create_document_chunks(db: Session, document_chunk_data:list[dict]):
     ]
 
     db.add_all(document_chunks)
-    db.commit
+    db.commit()
 
     return document_chunks

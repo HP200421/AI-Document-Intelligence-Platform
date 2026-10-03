@@ -15,29 +15,30 @@ async def create_document(db: Session, user_id:int, file: UploadFile) -> Documen
     try:
         document = create_document_repo(db, user_id, file_data)
 
-        # Extract text from pdf
-        pages = extract_text_from_pdf(document.filepath)
-        # Retrived chunks
-        chunks = []
-        # Each Chunk Index
-        chunk_index = 0
+        if document:
+            # Extract text from pdf
+            pages = extract_text_from_pdf(document.filepath)
+            # Retrived chunks
+            chunks = []
+            # Each Chunk Index
+            chunk_index = 0
 
-        for page in pages:
-            # Extract page chunks
-            page_chunks  = chunk_text(page["text"], 300, 50)
-            # Extract chunks from page chunks
-            for content in page_chunks:
-                chunks.append({
-                    "document_id": document.id,
-                    "chunk_index": chunk_index,
-                    "page_number": page["page_number"],
-                    "content": content
-                })
+            for page in pages:
+                # Extract page chunks
+                page_chunks  = chunk_text(page["text"], 300, 50)
+                # Extract chunks from page chunks
+                for content in page_chunks:
+                    chunks.append({
+                        "document_id": document.id,
+                        "chunk_index": chunk_index,
+                        "page_number": page["page_number"],
+                        "content": content
+                    })
 
-                chunk_index += 1
+                    chunk_index += 1
 
-        # Bulk insert into document_chunks table
-        create_document_chunks(db, chunks)
+            # Bulk insert into document_chunks table
+            create_document_chunks(db, chunks)
 
         return DocumentResponse(
             id = document.id,

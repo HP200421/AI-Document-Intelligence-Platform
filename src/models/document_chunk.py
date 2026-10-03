@@ -7,7 +7,7 @@ class DocumentChunk(Base):
     __tablename__ = "document_chunks"
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    document_id: Mapped[int] = mapped_column(ForeignKey("documents.id", ondelete="CASCADE"), unique=True, index=True)
+    document_id: Mapped[int] = mapped_column(ForeignKey("documents.id", ondelete="CASCADE"), index=True)
     chunk_index: Mapped[int] = mapped_column(nullable=False)
     page_number: Mapped[int] = mapped_column(nullable=True)
     content:Mapped[str] = mapped_column(Text, nullable=False)
