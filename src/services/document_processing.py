@@ -49,6 +49,3 @@ def extract_text_from_pdf(filepath: str) -> str:
     extracted_text = "\n\n".join(extracted_pages)
 
     return clean_extracted_text(extracted_text)
-
-
-    
