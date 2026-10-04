@@ -7,6 +7,9 @@ from pathlib import Path
 from src.services.document_processing import extract_text_from_pdf
 from src.services.chunking import chunk_text
 from src.repositories.document_chunk_repo import create_document_chunks
+from src.services.embedding import generate_embedding
+from src.core.config import settings
+from src.repositories.chunk_embedding_repo import create_chunk_embeddings
 
 async def create_document(db: Session, user_id:int, file: UploadFile) -> DocumentResponse:
 
@@ -38,7 +41,24 @@ async def create_document(db: Session, user_id:int, file: UploadFile) -> Documen
                     chunk_index += 1
 
             # Bulk insert into document_chunks table
-            create_document_chunks(db, chunks)
+            document_chunks = create_document_chunks(db, chunks)
+
+            # Chunk embeddings
+            chunk_embeddings = []
+            if document_chunks:
+                for chunk in document_chunks:
+                    embedding = generate_embedding(chunk.content)
+
+                    if embedding:
+                        chunk_embeddings.append(
+                            {
+                                "chunk_id": chunk.id,
+                                "embedding": embedding,
+                                "model": settings.EMBEDDING_MODEL
+                            }
+                        )
+
+                create_chunk_embeddings(db, chunk_embeddings)
 
         return DocumentResponse(
             id = document.id,

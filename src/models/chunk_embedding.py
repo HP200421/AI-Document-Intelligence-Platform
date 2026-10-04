@@ -10,7 +10,7 @@ class ChunkEmbedding(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True)
     chunk_id: Mapped[int] = mapped_column(ForeignKey("document_chunks.id", ondelete="CASCADE"), index=True, nullable=False, unique=True)
-    embedding: Mapped[list[float]] = mapped_column(Vector(1536), nullable=False)
+    embedding: Mapped[list[float]] = mapped_column(Vector(1024), nullable=False)
     model: Mapped[str] = mapped_column(String(255), nullable=False)
     created_at: Mapped[datetime.datetime] = mapped_column(
         DateTime(timezone=True),

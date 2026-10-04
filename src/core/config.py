@@ -11,6 +11,8 @@ class Settings(BaseSettings):
 
     SECURE_COOKIE: bool = True
 
+    EMBEDDING_MODEL: str = "BAAI/bge-m3"
+    EMBEDDING_USE_FP16: bool = False
 
     model_config = SettingsConfigDict(
         env_file= ".env",
