@@ -19,5 +19,5 @@ async def upload_document_endpoint(file:UploadFile = File(...), user_id:int = De
 
 @router.post("/{document_id}/ask")
 async def ask_document_question(question:str, document_id:int, db: Session = Depends(get_db), user_id:int = Depends(get_current_user)):
-    ask_question(db, document_id, question, user_id)
-    return {"message": "Processing user query"}
+    
+    return ask_question(db, document_id, question, user_id)

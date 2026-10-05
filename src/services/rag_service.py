@@ -2,6 +2,8 @@ from sqlalchemy.orm import Session
 
 from src.services.embedding import generate_embedding
 from src.repositories.chunk_embedding_repo import search_similar_chunks
+from src.services.context_builder import build_context
+from src.services.llm import generate_answer
 
 def ask_question(db:Session, document_id:int, question:str, user_id:int):
     query_embedding = generate_embedding(question)
@@ -13,6 +15,9 @@ def ask_question(db:Session, document_id:int, question:str, user_id:int):
 
     if not relevant_chunks:
         return []
+
+    context = build_context(relevant_chunks)
+
+    return generate_answer(question, context)
     
-    return relevant_chunks
 

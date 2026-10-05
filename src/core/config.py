@@ -14,6 +14,9 @@ class Settings(BaseSettings):
     EMBEDDING_MODEL: str = "BAAI/bge-m3"
     EMBEDDING_USE_FP16: bool = False
 
+    OPENAI_API_KEY: str
+    OPENAI_MODEL: str
+
     model_config = SettingsConfigDict(
         env_file= ".env",
         env_file_encoding= "utf-8",

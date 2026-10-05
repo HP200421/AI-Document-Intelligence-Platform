@@ -43,4 +43,12 @@ def search_similar_chunks(db: Session, user_id:int, document_id:int, query_embed
 
     result = db.execute(stmt)
 
-    return result.all()
+    return [
+        {
+            "chunk_id": row.chunk_id,
+            "content": row.content,
+            "page_number": row.page_number,
+            "distance": row.distance,
+        }
+        for row in result
+    ]

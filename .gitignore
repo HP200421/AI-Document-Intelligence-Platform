@@ -14,3 +14,5 @@ __pycache__/
 .aidip/
 
 storage/documents
+
+readme.md
