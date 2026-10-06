@@ -10,4 +10,4 @@ def generate_answer(question:str, context:str) ->str:
         input=( f"Context:\n" f"{context}\n\n" f"Question:\n" f"{question}" )
     )
 
-    return response.output.text
+    return response.output
